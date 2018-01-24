@@ -5,6 +5,7 @@ $(document).ready(function() {
     $('#prefs1').load('?type=file&value=prefs&count=-1');
     $('#accordion1').load('?type=file&value=pfiles&count=-1');
     $('#crypto1').load('?type=file&value=crypto&count=-1');
+    $('#string1').load('?type=file&value=string&count=-1');
     $('#hash1').load('?type=file&value=hash&count=-1');
     $('#sqlite1').load('?type=file&value=sqlite&count=-1');
     $('#ipc1').load('?type=file&value=ipc&count=-1');
@@ -54,9 +55,9 @@ function autoRefresh() {
         setCookie("crypto", "-2", 1);
 
     }else if (target == '#String') {
-             $("#badgeString").text("");
-             $('#string1').load('?type=file&value=string&count=-1');
-             setCookie("string", "-2", 1);
+        $("#badgeString").text("");
+        $('#string1').load('?type=file&value=string&count=-1');
+        setCookie("string", "-2", 1);
 
     } else if (target == '#Hash') {
         $("#badgeHash").text("");
@@ -260,7 +261,7 @@ function getString() {
     }).done(function(data) {
         if (data != "") {
 
-            if (crypto != -2) {
+            if (string != -2) {
                 if (data > string) {
                     setCookie("string", data, 1);
                     $("#badgeString").text(data);
@@ -474,6 +475,15 @@ $("[name='serialization']").bootstrapSwitch();
                value: state
             });
         });
+
+    $("[name='string']").bootstrapSwitch();
+            $('input[name="string"]').on('switchChange.bootstrapSwitch', function(event, state) {
+                $.get("/", {
+                   type: "enableTab",
+                   tab: "string",
+                   value: state
+                });
+            });
 
     $("[name='hash']").bootstrapSwitch();
         $('input[name="hash"]').on('switchChange.bootstrapSwitch', function(event, state) {

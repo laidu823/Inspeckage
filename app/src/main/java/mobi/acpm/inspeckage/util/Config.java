@@ -11,6 +11,7 @@ public class Config {
     public static final String P_LOG = "/log";
     public static final String P_PREFS = "/prefs";
     public static final String P_CRYPTO = "/crypto";
+    public static final String P_STRING = "/string";
     public static final String P_SQLITE = "/sqlite";
     public static final String P_HASH = "/hash";
     public static final String P_PACKAGE_DETAIL = "/package_detail";

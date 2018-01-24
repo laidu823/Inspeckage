@@ -469,6 +469,9 @@ public class WebServer extends fi.iki.elonen.NanoHTTPD {
                 case "crypto":
                     edit.putBoolean(Config.SP_TAB_ENABLE_CRYPTO, Boolean.valueOf(state));
                     break;
+                case "string":
+                    edit.putBoolean(Config.SP_TAB_ENABLE_STRING, Boolean.valueOf(state));
+                    break;
                 case "hash":
                     edit.putBoolean(Config.SP_TAB_ENABLE_HASH, Boolean.valueOf(state));
                     break;
@@ -793,6 +796,9 @@ public class WebServer extends fi.iki.elonen.NanoHTTPD {
             case "crypto":
                 path = Config.P_CRYPTO;
                 break;
+            case "string":
+                path = Config.P_STRING;
+                break;
             case "serialization":
                 path = Config.P_SERIALIZATION;
                 break;
@@ -1095,7 +1101,7 @@ public class WebServer extends fi.iki.elonen.NanoHTTPD {
         String shared = "<input type='checkbox' name='shared' data-size='mini' checked> Shared Preferences</br>";
         String serialization = "<input type='checkbox' name='serialization' data-size='mini' checked> Serialization</br>";
         String crypto = "<input type='checkbox' name='crypto' data-size='mini' checked> Crypto</br>";
-        String string = "<input type='checkbox' name='crypto' data-size='mini' checked> String</br>";
+        String string = "<input type='checkbox' name='string' data-size='mini' checked> String</br>";
         String hash = "<input type='checkbox' name='hash' data-size='mini' checked> Hash</br>";
         String sqlite = "<input type='checkbox' name='sqlite' data-size='mini' checked> SQLite</br>";
         String http = "<input type='checkbox' name='http' data-size='mini' checked> HTTP</br>";
@@ -1117,7 +1123,7 @@ public class WebServer extends fi.iki.elonen.NanoHTTPD {
             crypto = "<input type='checkbox' name='crypto' data-size='mini' unchecked> Crypto</br>";
         }
         if (!mPrefs.getBoolean(Config.SP_TAB_ENABLE_STRING, true)) {
-            string = "<input type='checkbox' name='crypto' data-size='mini' unchecked> String</br>";
+            string = "<input type='checkbox' name='string' data-size='mini' unchecked> String</br>";
         }
         if (!mPrefs.getBoolean(Config.SP_TAB_ENABLE_HASH, true)) {
             hash = "<input type='checkbox' name='hash' data-size='mini' unchecked> Hash</br>";
