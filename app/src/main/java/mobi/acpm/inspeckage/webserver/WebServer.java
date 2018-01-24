@@ -53,6 +53,7 @@ import mobi.acpm.inspeckage.hooks.MiscHook;
 import mobi.acpm.inspeckage.hooks.SQLiteHook;
 import mobi.acpm.inspeckage.hooks.SerializationHook;
 import mobi.acpm.inspeckage.hooks.SharedPrefsHook;
+import mobi.acpm.inspeckage.hooks.StringHook;
 import mobi.acpm.inspeckage.hooks.UserHooks;
 import mobi.acpm.inspeckage.hooks.WebViewHook;
 import mobi.acpm.inspeckage.log.LogService;
@@ -73,6 +74,7 @@ import static mobi.acpm.inspeckage.util.FileType.MISC;
 import static mobi.acpm.inspeckage.util.FileType.PREFS;
 import static mobi.acpm.inspeckage.util.FileType.SERIALIZATION;
 import static mobi.acpm.inspeckage.util.FileType.SQLITE;
+import static mobi.acpm.inspeckage.util.FileType.STRING;
 import static mobi.acpm.inspeckage.util.FileType.USERHOOKS;
 import static mobi.acpm.inspeckage.util.FileType.WEBVIEW;
 
@@ -1093,6 +1095,7 @@ public class WebServer extends fi.iki.elonen.NanoHTTPD {
         String shared = "<input type='checkbox' name='shared' data-size='mini' checked> Shared Preferences</br>";
         String serialization = "<input type='checkbox' name='serialization' data-size='mini' checked> Serialization</br>";
         String crypto = "<input type='checkbox' name='crypto' data-size='mini' checked> Crypto</br>";
+        String string = "<input type='checkbox' name='crypto' data-size='mini' checked> String</br>";
         String hash = "<input type='checkbox' name='hash' data-size='mini' checked> Hash</br>";
         String sqlite = "<input type='checkbox' name='sqlite' data-size='mini' checked> SQLite</br>";
         String http = "<input type='checkbox' name='http' data-size='mini' checked> HTTP</br>";
@@ -1112,6 +1115,9 @@ public class WebServer extends fi.iki.elonen.NanoHTTPD {
         }
         if (!mPrefs.getBoolean(Config.SP_TAB_ENABLE_CRYPTO, true)) {
             crypto = "<input type='checkbox' name='crypto' data-size='mini' unchecked> Crypto</br>";
+        }
+        if (!mPrefs.getBoolean(Config.SP_TAB_ENABLE_STRING, true)) {
+            string = "<input type='checkbox' name='crypto' data-size='mini' unchecked> String</br>";
         }
         if (!mPrefs.getBoolean(Config.SP_TAB_ENABLE_HASH, true)) {
             hash = "<input type='checkbox' name='hash' data-size='mini' unchecked> Hash</br>";
@@ -1137,7 +1143,7 @@ public class WebServer extends fi.iki.elonen.NanoHTTPD {
         if (!mPrefs.getBoolean(Config.SP_TAB_ENABLE_PHOOKS, true)) {
             phooks = "<input type='checkbox' name='phooks' data-size='mini' unchecked> + Hooks</br>";
         }
-        return sb.append("<div class=\"col-md-6\" style=\"line-height:200%;\">").append(shared).append(serialization).append(crypto).append(hash).append(sqlite).append(http).append("</div><div class=\"col-md-6\" style=\"line-height:200%;\">")
+        return sb.append("<div class=\"col-md-6\" style=\"line-height:200%;\">").append(shared).append(serialization).append(crypto).append(string).append(hash).append(sqlite).append(http).append("</div><div class=\"col-md-6\" style=\"line-height:200%;\">")
                 .append(filesystem).append(misc).append(webview).append(ipc).append(phooks).append("</div>").toString();
     }
 
@@ -1687,6 +1693,63 @@ public class WebServer extends fi.iki.elonen.NanoHTTPD {
                 }
                 break;
             }
+
+            case "string": {
+                html = FileUtil.readFromFile(mPrefs, STRING).replace(StringHook.TAG, "");
+                if(!html.equals("")) {
+                    String[] x = html.split("</br>");
+
+                    for (int i = 0; i < x.length; i++) {
+
+                        if ((i + 1) > count) {
+                            countTmp = (i + 1);
+                        } else {
+                            countTmp = count;
+                        }
+
+                        if (x[i].length() > 170) {
+                            String len170 = x[i].substring(0, 135);
+                            String rest = x[i].substring(135);
+                            x[i] = "<div class=\"collapse-group\"> <span class=\"label label-info\">" + (i + 1) + "</span>  " + len170 +
+                                    "<div class=\"collapse\"><p class=\"breakWord\">" + rest + "</p></div><a class=\"a\" href=\"#\"> &raquo;</a></div>";
+                            continue;
+                        }
+                        x[i] = "<span class=\"label label-info\">" + (i + 1) + "</span>   " + Html.escapeHtml(x[i]) + "</br>";
+
+
+                    }
+
+                    List<String> ls = Arrays.asList(x);
+
+                    Collections.reverse(ls);
+                    x = (String[]) ls.toArray();
+                    StringBuilder sb = new StringBuilder();
+
+                    for (int i = 0; i < x.length; i++) {
+                        if (i < 500)
+                            sb.append(x[i]);
+                    }
+
+                    //need load from here for callapse work correctaly
+                    String script = "<script>$(document).ready(function() {" +
+                            "$('a').on('click', function(e) {" +
+                            "                    e.preventDefault();" +
+                            "                    var $this = $(this);" +
+                            "                    var $collapse = $this.closest('.collapse-group').find('.collapse');" +
+                            "                    $collapse.collapse('toggle');" +
+                            "                });" +
+                            "});</script>";
+                    sb.append(script);
+
+                    if (count == -1) {
+                        html = sb.toString();
+                    } else {
+                        html = "" + countTmp;
+                    }
+                }
+                break;
+            }
+
             case "prefs": {
                 html = FileUtil.readFromFile(mPrefs, PREFS).replace(SharedPrefsHook.TAG, "");
                 if(!html.equals("")) {

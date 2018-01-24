@@ -87,6 +87,7 @@ public class Config {
     public static final String SP_TAB_ENABLE_SHAREDP = "enable_sharedp";
     public static final String SP_TAB_ENABLE_SERIALIZATION = "enable_serialization";
     public static final String SP_TAB_ENABLE_CRYPTO = "enable_crypto";
+    public static final String SP_TAB_ENABLE_STRING = "enable_string";
     public static final String SP_TAB_ENABLE_HASH = "enable_hash";
     public static final String SP_TAB_ENABLE_SQLITE = "enable_sqlite";
     public static final String SP_TAB_ENABLE_HTTP = "enable_http";

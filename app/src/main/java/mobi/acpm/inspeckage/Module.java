@@ -21,6 +21,7 @@ import mobi.acpm.inspeckage.hooks.SQLiteHook;
 import mobi.acpm.inspeckage.hooks.SSLPinningHook;
 import mobi.acpm.inspeckage.hooks.SerializationHook;
 import mobi.acpm.inspeckage.hooks.SharedPrefsHook;
+import mobi.acpm.inspeckage.hooks.StringHook;
 import mobi.acpm.inspeckage.hooks.UIHook;
 import mobi.acpm.inspeckage.hooks.UserHooks;
 import mobi.acpm.inspeckage.hooks.WebViewHook;
@@ -80,6 +81,8 @@ public class Module extends XC_MethodHook implements IXposedHookLoadPackage, IXp
                                 ft = FileType.PREFS;
                             } else if (log.contains(CryptoHook.TAG)) { //2
                                 ft = FileType.CRYPTO;
+                            }else if (log.contains(StringHook.TAG)) { //2
+                                ft = FileType.STRING;
                             } else if (log.contains(HashHook.TAG)) { //3
                                 ft = FileType.HASH;
                             } else if (log.contains(SQLiteHook.TAG)) { //6
@@ -123,6 +126,9 @@ public class Module extends XC_MethodHook implements IXposedHookLoadPackage, IXp
         }
         if(sPrefs.getBoolean(Config.SP_TAB_ENABLE_CRYPTO,true)) {
             CryptoHook.initAllHooks(loadPackageParam);
+        }
+        if(sPrefs.getBoolean(Config.SP_TAB_ENABLE_STRING,true)) {
+            StringHook.initAllHooks(loadPackageParam);
         }
         if(sPrefs.getBoolean(Config.SP_TAB_ENABLE_FS,true)) {
             FileSystemHook.initAllHooks(loadPackageParam);

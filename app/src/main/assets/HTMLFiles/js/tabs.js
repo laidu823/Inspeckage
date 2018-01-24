@@ -53,6 +53,11 @@ function autoRefresh() {
         $('#crypto1').load('?type=file&value=crypto&count=-1');
         setCookie("crypto", "-2", 1);
 
+    }else if (target == '#String') {
+             $("#badgeString").text("");
+             $('#string1').load('?type=file&value=string&count=-1');
+             setCookie("string", "-2", 1);
+
     } else if (target == '#Hash') {
         $("#badgeHash").text("");
         $('#hash1').load('?type=file&value=hash&count=-1');
@@ -105,6 +110,10 @@ function autoRefresh() {
 
     if (target != '#Crypto') {
         getCrypto();
+    }
+
+    if (target != '#String') {
+            getString();
     }
 
     if (target != '#Hash') {
@@ -236,6 +245,28 @@ function getCrypto() {
                 }
             } else {
                 setCookie("crypto", data, 1);
+            }
+        }
+    });
+}
+
+function getString() {
+    var string = getCookie("string");
+
+    $.get("/", {
+        type: "file",
+        value: "string",
+        count: string
+    }).done(function(data) {
+        if (data != "") {
+
+            if (crypto != -2) {
+                if (data > string) {
+                    setCookie("string", data, 1);
+                    $("#badgeString").text(data);
+                }
+            } else {
+                setCookie("string", data, 1);
             }
         }
     });
