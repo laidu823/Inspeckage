@@ -73,12 +73,12 @@ public class HashHook extends XC_MethodHook {
 
             protected void afterHookedMethod(MethodHookParam param) throws Throwable {
 
-                //XposedBridge.log(TAG + "digest2 = " + Util.byteArrayToString((byte[]) param.args[0]));
+                XposedBridge.log(TAG + "digest2 = " + Util.byteArrayToString((byte[]) param.args[0]));
 
-                //sb.append(" : " + Util.toHexString((byte[]) param.getResult())+"]");
+                sb.append(" : " + Util.toHexString((byte[]) param.getResult())+"]");
 
-                //XposedBridge.log(TAG + sb.toString());
-                //sb = new StringBuffer();
+                XposedBridge.log(TAG + sb.toString());
+                sb = new StringBuffer();
             }
         });
 
@@ -86,9 +86,9 @@ public class HashHook extends XC_MethodHook {
 
             protected void afterHookedMethod(MethodHookParam param) throws Throwable {
 
-                //sb.append(" : " + (Integer) param.getResult()+"]");
-                //XposedBridge.log(TAG + sb.toString());
-                //sb = new StringBuffer();
+                sb.append(" : " + (Integer) param.getResult()+"]");
+                XposedBridge.log(TAG + sb.toString());
+                sb = new StringBuffer();
             }
         });
     }

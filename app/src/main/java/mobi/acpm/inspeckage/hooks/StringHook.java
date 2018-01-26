@@ -36,6 +36,8 @@ public class StringHook extends XC_MethodHook {
         XposedBridge.hookAllConstructors(String.class,xc_methodHook);
         XposedBridge.hookAllConstructors(StringBuilder.class,xc_methodHook);
         XposedBridge.hookAllConstructors(StringBuffer.class,xc_methodHook);
+
+//        Class<?> clazz = null;
 //        try {
 //            clazz = loadPackageParam.classLoader.loadClass("java.lang.StringFactory");
 //        } catch (ClassNotFoundException e) {
