@@ -7,6 +7,7 @@ public class Config {
 
     //Paths
     public static final String P_ROOT = "/Inspeckage";
+    public static final String SDCARD_ROOT = "/sdcard";
 
     public static final String P_LOG = "/log";
     public static final String P_PREFS = "/prefs";

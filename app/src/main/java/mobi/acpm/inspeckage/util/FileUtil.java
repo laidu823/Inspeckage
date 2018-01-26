@@ -24,6 +24,8 @@ import java.util.Map;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
+import de.robv.android.xposed.XposedBridge;
+
 /**
  * Created by acpm on 29/11/15.
  */
@@ -36,10 +38,12 @@ public class FileUtil {
             String absolutePath;
 
             if (prefs.getBoolean(Config.SP_HAS_W_PERMISSION,false)) {
-                absolutePath = Environment.getExternalStorageDirectory().getAbsolutePath()+Config.P_ROOT+"/"+prefs.getString(Config.SP_PACKAGE,"");
+                absolutePath = Config.SDCARD_ROOT+Config.P_ROOT+"/"+prefs.getString(Config.SP_PACKAGE,"");
             } else {
                 absolutePath = prefs.getString(Config.SP_DATA_DIR, null)+Config.P_ROOT;
             }
+
+
             boolean append = true;
             if (ft != null) {
                 switch (ft) {
@@ -57,6 +61,10 @@ public class FileUtil {
                         break;
                     case CRYPTO:
                         absolutePath += Config.P_CRYPTO; //2
+                        data = data + "</br>";
+                        break;
+                    case STRING:
+                        absolutePath += Config.P_STRING; //2
                         data = data + "</br>";
                         break;
                     case IPC:
@@ -157,7 +165,8 @@ public class FileUtil {
             String absolutePath;
 
             if (prefs.getBoolean(Config.SP_HAS_W_PERMISSION, false)) {
-                absolutePath = Environment.getExternalStorageDirectory().getAbsolutePath()+Config.P_ROOT+"/"+prefs.getString(Config.SP_PACKAGE,"");
+//                absolutePath = Environment.getExternalStorageDirectory().getAbsolutePath()+Config.P_ROOT+"/"+prefs.getString(Config.SP_PACKAGE,"");
+                absolutePath = Config.SDCARD_ROOT+Config.P_ROOT+"/"+prefs.getString(Config.SP_PACKAGE,"");
             } else {
                 absolutePath = prefs.getString(Config.SP_DATA_DIR, null)+Config.P_ROOT;
             }
@@ -171,6 +180,9 @@ public class FileUtil {
                     break;
                 case CRYPTO:
                     absolutePath += Config.P_CRYPTO; //2
+                    break;
+                case STRING:
+                    absolutePath += Config.P_STRING; //2
                     break;
                 case PREFS:
                     absolutePath += Config.P_PREFS; //5
