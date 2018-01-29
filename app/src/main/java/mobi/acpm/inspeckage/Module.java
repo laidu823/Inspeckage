@@ -55,8 +55,6 @@ public class Module extends XC_MethodHook implements IXposedHookLoadPackage, IXp
 
         sPrefs.reload();
 
-        StringHook.initAllHooks(loadPackageParam);
-
         //estes hooks tem que ocorrer na inicialização
         //ProcessHook.initAllHooks(loadPackageParam);
 
