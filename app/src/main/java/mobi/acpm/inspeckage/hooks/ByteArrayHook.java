@@ -12,7 +12,7 @@ import static de.robv.android.xposed.XposedHelpers.findAndHookMethod;
  */
 public class ByteArrayHook extends XC_MethodHook {
 
-    public static final String TAG = "Inspeckage_String:";
+    public static final String TAG = "Inspeckage_byte[]:";
     private static StringBuffer sb;
 
     public static void initAllHooks(final XC_LoadPackage.LoadPackageParam loadPackageParam) {
