@@ -1,6 +1,7 @@
 package mobi.acpm.inspeckage.ui;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
@@ -69,7 +70,7 @@ public class MainActivity extends AppCompatActivity
                 requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_PHONE_STATE}, 0);
             }
 
-            AsyncTask<Void, Void, String> task = new AsyncTask<Void, Void, String>() {
+            @SuppressLint("StaticFieldLeak") AsyncTask<Void, Void, String> task = new AsyncTask<Void, Void, String>() {
                 @Override
                 protected String doInBackground(Void... params) {
                     AdvertisingIdClient.Info idInfo = null;
